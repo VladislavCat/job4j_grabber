@@ -1,13 +1,12 @@
 package grabber;
 
 import java.time.LocalDateTime;
-
-import static java.time.format.DateTimeFormatter.ISO_ZONED_DATE_TIME;
+import java.time.ZonedDateTime;
 
 public class HabrCareerDateTimeParser implements DateTimeParser {
 
     @Override
     public LocalDateTime parse(String parse) {
-        return LocalDateTime.parse(parse, ISO_ZONED_DATE_TIME);
+        return ZonedDateTime.parse(parse).toLocalDateTime();
     }
 }
