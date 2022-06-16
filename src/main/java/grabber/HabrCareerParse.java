@@ -7,6 +7,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.StringJoiner;
 
 public class HabrCareerParse {
 
@@ -28,5 +31,12 @@ public class HabrCareerParse {
                 System.out.printf("%s %s %s%n", vacancyName, dateVacancy, link);
             });
         }
+    }
+
+    private String retrieveDescription(String link) throws IOException {
+        Connection connection = Jsoup.connect(link);
+        Document document = connection.get();
+        Elements rows = document.select(".style-ugc");
+        return rows.text();
     }
 }
