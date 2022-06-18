@@ -26,11 +26,12 @@ public class PsqlStore implements Store, AutoCloseable {
     @Override
     public void save(Post post) {
         try (PreparedStatement ps = cn.prepareStatement("insert into vacancies(title, url"
-                + ", created_vacancies, description) values(?, ?, ?, ?")) {
+                + ", created_vacancies, description) values(?, ?, ?, ?)")) {
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getLink());
             ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
             ps.setString(4, post.getDescription());
+            ps.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
