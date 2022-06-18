@@ -41,7 +41,7 @@ public class HabrCareerParse implements Parse {
     @Override
     public List<Post> list(String link) {
         List<Post> rsl = new ArrayList<>();
-        for (int i = 0; i < COUNT_PAGE; i++) {
+        for (int i = 1; i <= COUNT_PAGE; i++) {
             Elements rows;
             try {
                 rows = Jsoup.connect(link + "?page=" + i).get().select(".vacancy-card__inner");
