@@ -49,7 +49,7 @@ public class HabrCareerParse implements Parse {
             String desc = retrieveDescription(url);
             LocalDateTime dateVacancy = dateTimeParser.parse(e.select(".vacancy-card__date")
                     .first().child(0).attr("datetime"));
-            rsl.add(new Post(name, url, desc, dateVacancy));
+            rsl.add(new Post(name, url, dateVacancy, desc));
         }
         return rsl;
     }
