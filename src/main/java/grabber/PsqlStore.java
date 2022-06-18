@@ -27,7 +27,7 @@ public class PsqlStore implements Store, AutoCloseable {
     @Override
     public void save(Post post) {
         try (PreparedStatement ps = cn.prepareStatement("insert into vacancies(title, url"
-                + ", created_vacancies, description) values(?, ?, ?, ?)")) {
+                + ", created_vacancies, description) values(?, ?, ?, ?) on conflict (url) do nothing")) {
             ps.setString(1, post.getTitle());
             ps.setString(2, post.getLink());
             ps.setTimestamp(3, Timestamp.valueOf(post.getCreated()));
@@ -59,8 +59,9 @@ public class PsqlStore implements Store, AutoCloseable {
         try (PreparedStatement ps = cn.prepareStatement("select * from vacancies where id_vacancies = ?")) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                rs.next();
-                rsl = createPostOnResultSet(rs);
+                if (rs.next()) {
+                    rsl = createPostOnResultSet(rs);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
